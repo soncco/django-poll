@@ -1,0 +1,23 @@
+{% extends "core/base.html" %} {% block content %}
+<h3 class="text-center">{{ encuesta.titulo }}</h3>
+<form action="{% url 'core:registrar' %}" method="post">
+  {% for opcion in encuesta.opcion_set.all %}
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="radio"
+      name="opcion"
+      id="opcion{{ forloop.counter }}"
+      value="{{ opcion.pk }}"
+      required
+    />
+    <label class="form-check-label" for="opcion{{ forloop.counter }}">
+      {{ opcion.opcion }}
+    </label>
+  </div>
+  {% endfor %} {% csrf_token %}
+  <div class="text-center">
+    <button class="btn btn-primary">Votar</button>
+  </div>
+</form>
+{% endblock %}
